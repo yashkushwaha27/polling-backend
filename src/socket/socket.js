@@ -12,15 +12,21 @@ exports.initiateServer = (server) => {
     teacher: {},
   };
 
-  // Cleanup function to clear all users after every 5 minutes
-  setInterval(() => {
-    users = {
-      student: {},
-      teacher: {},
-    };
-  }, 5 * 60 * 1000); // 5 minutes
-
   io.on("connection", (socket) => {
+    // Cleanup function to clear all users after every 5 minutes
+    setInterval(() => {
+      Object.keys(users.student).forEach((item) => {
+        io.to(users.student[item]?.socketId).emit(socketConstants.triggerClose);
+      });
+      Object.keys(users.teacher).forEach((item) => {
+        io.to(users.teacher[item]?.socketId).emit(socketConstants.triggerClose);
+      });
+      users = {
+        student: {},
+        teacher: {},
+      };
+    }, 5 * 60 * 1000); // 5 minutes
+
     socket.on(socketConstants.createStudent, (data) => {
       if (users.student[data.studentId]) {
         io.to(socket.id).emit(socketConstants.alreadyExists, {
