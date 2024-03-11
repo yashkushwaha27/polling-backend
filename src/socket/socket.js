@@ -12,6 +12,14 @@ exports.initiateServer = (server) => {
     teacher: {},
   };
 
+  // Cleanup function to clear all users after every 5 minutes
+  setInterval(() => {
+    users = {
+      student: {},
+      teacher: {},
+    };
+  }, 5 * 60 * 1000); // 5 minutes
+
   io.on("connection", (socket) => {
     socket.on(socketConstants.createStudent, (data) => {
       if (users.student[data.studentId]) {
