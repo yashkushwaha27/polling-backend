@@ -7,6 +7,7 @@ exports.initiateServer = (server) => {
       origin: [
         "http://localhost:3000",
         "https://polling-frontend-nine.vercel.app/",
+        "https://polling-backend-one.vercel.app/",
       ],
     },
   });
