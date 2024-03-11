@@ -7,6 +7,7 @@ const { initiateServer } = require("./src/socket/socket");
 
 const app = express();
 const server = http.createServer(app);
+const port = process.env.PORT || appConstants.port;
 
 const { json, urlencoded } = express;
 const corsOptions = {
@@ -22,6 +23,4 @@ initiateServer(server);
 
 app.get("/", (_, res) => res.status(200).send({ status: true, working: true }));
 
-server.listen(appConstants.port, () =>
-  console.log(`Server started on http://localhost:${appConstants.port}`)
-);
+server.listen(port, () => console.log(`Server started on port ${port}`));
