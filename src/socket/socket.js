@@ -4,11 +4,7 @@ const { getPollingResult } = require("../util/pollingResult.util");
 exports.initiateServer = (server) => {
   const io = require("socket.io")(server, {
     cors: {
-      origin: [
-        "http://localhost:3000",
-        "https://polling-frontend-nine.vercel.app/",
-        "https://polling-backend-one.vercel.app/",
-      ],
+      origin: "*",
     },
   });
   let users = {
